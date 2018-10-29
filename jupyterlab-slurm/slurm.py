@@ -3,10 +3,12 @@ import re
 import shlex
 import asyncio
 import html
+import nbsubmit
 
 from notebook.base.handlers import IPythonHandler
 from tornado.web import MissingArgumentError
 
+comet = nbsubmit.cluster.get("comet")
 
 class ShellExecutionHandler(IPythonHandler):
     async def run_command(self, command=None, stdin=None):
@@ -132,13 +134,7 @@ class SbatchHandler(ShellExecutionHandler):
                 self.log.debug("Body arguments: " + str(self.request.body_arguments))
                 script_contents = self.get_body_argument("script")
                 self.log.debug("script_contents: " + script_contents)
-                string_to_file(script_contents)
-                stdout, stderr = await self.run_command(
-                    "sbatch", stdin=open("temporary_file.temporary", "rb")
-                )
-                import os
-
-                os.remove("temporary_file.temporary")
+                comet.launch_job("job_run_77", "job.ipynb", hours=.1)
             else:
                 self.log.debug("Body arguments: " + str(self.request.body_arguments))
                 self.log.debug("Query arguments: " + str(self.request.query_arguments))
