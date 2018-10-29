@@ -224,7 +224,7 @@ class SlurmWidget extends Widget {
      // at the end of the main queue table area, append a prompt message and a form submission area
     $('#queue_wrapper').append('<br><div id="submit_script"><span>'+
                                'Paste in the contents of a Slurm script file and submit them to be run </span><br><br>' +
-                               '<textarea id="slurm_script" cols="50" rows="20"></textarea><br>');
+                               '<textarea id="slurm_script" cols="50" rows="1"></textarea><br>');
     // after the form submission area, insert a submit button and then a cancel button
     $('#slurm_script').after('<div id="slurm_buttons">'+
                               '<button class="button slurm_button" id="submit_button"><span>Submit</span></button>' +
