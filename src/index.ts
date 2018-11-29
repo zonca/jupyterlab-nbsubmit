@@ -80,9 +80,6 @@ class SlurmWidget extends Widget {
         },
         deferRender: true,        
         pageLength: 15,
-        language: {
-          search: 'User',
-        },
         columns: [
         { name: 'JOBID', searchable: false },
         { name: 'PARTITION', searchable: false },
