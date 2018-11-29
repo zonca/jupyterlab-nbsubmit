@@ -140,14 +140,6 @@ class SlurmWidget extends Widget {
             extend: 'selectNone'
           },
           {
-            text: 'Submit Slurm Script via File Path',
-            action:  (e, dt, node, config) => {
-              var scriptPath = window.prompt('Enter a Slurm script file path');
-              self._submit_batch_script_path(scriptPath, dt)
-              alert(scriptPath);
-            }
-          },
-          {
             text: 'Submit Slurm Script via File Contents',
             action: (e, dt, node, config) => {
               //var scriptContents = window.prompt('');
