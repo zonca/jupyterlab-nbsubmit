@@ -123,20 +123,6 @@ class SlurmWidget extends Widget {
             }
           },
           {
-            extend: 'selected',
-            text: 'Hold Selected Job(s)',
-            action: (e, dt, node, config) => {
-              self._run_on_selected('/scontrol/hold', 'PATCH', dt);
-            }  
-          },
-          {
-            extend: 'selected',
-            text: 'Release Selected Job(s)',
-            action: (e, dt, node, config) => {
-              self._run_on_selected('/scontrol/release', 'PATCH', dt);
-            }  
-          },
-          {
             extend: 'selectNone'
           },
           {
