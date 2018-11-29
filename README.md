@@ -4,6 +4,14 @@ A JupyterLab extension to submit Jupyter Notebooks for remote execution on a Slu
 
 This Jupyterlab extension is based on [jupyterlab-slurm](https://github.com/NERSC/jupyterlab-slurm)
 
+## Necessary configuration
+
+* You need to thave the [`nbsubmit`](https://github.com/zonca/nbsubmit) installed and configured (see its documentation)
+* You need to have SLURM commands available locally on the machine you are using, for this you can also create fake commands that forward the command via SSH, for example `/usr/local/bin/squeue`:
+
+        #!/bin/sh
+        ssh comet "squeue $@"
+
 ## Example usage
 
 See https://github.com/zonca/jupyterlab-nbsubmit/issues/1
