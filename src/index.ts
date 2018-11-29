@@ -40,7 +40,7 @@ class SlurmWidget extends Widget {
     super();
     console.log('constructor called');
     this.id = 'jupyterlab-slurm';
-    this.title.label = 'Slurm Queue Manager';
+    this.title.label = 'NBSubmit JupyterLab Interface';
     this.title.closable = true;
     this.addClass('jp-queueWidget');
 
@@ -243,7 +243,7 @@ class SlurmWidget extends Widget {
  * Activate the Slurm widget extension.
  */
 function activate(app: JupyterLab, palette: ICommandPalette, restorer: ILayoutRestorer) {
-  console.log('JupyterLab extension jupyterlab-slurm is activated!');
+  console.log('JupyterLab extension jupyterlab-nbsubmit is activated!');
 
   // Declare a Slurm widget variable
   let widget: SlurmWidget; 
@@ -251,7 +251,7 @@ function activate(app: JupyterLab, palette: ICommandPalette, restorer: ILayoutRe
   // Add an application command
   const command: string = 'hpc:open';
   app.commands.addCommand(command, {
-    label: 'Slurm Queue Manager',
+    label: 'NBSubmit JupyterLab Interface',
     execute: () => {
       if (!widget) {
         // Instantiate a new widget if one does not exist
