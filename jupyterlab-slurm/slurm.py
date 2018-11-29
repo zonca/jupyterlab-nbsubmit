@@ -9,6 +9,7 @@ from notebook.base.handlers import IPythonHandler
 from tornado.web import MissingArgumentError
 
 comet = cluster.get("comet")
+comet.mount()
 
 class ShellExecutionHandler(IPythonHandler):
     async def run_command(self, command=None, stdin=None):
@@ -136,8 +137,10 @@ class SbatchHandler(ShellExecutionHandler):
             elif scriptIs == "contents":
                 self.log.debug("Body arguments: " + str(self.request.body_arguments))
                 script_contents = self.get_body_argument("script")
+                hours = self.get_body_argument("hours")
+                name = self.get_body_argument("name")
                 self.log.debug("script_contents: " + script_contents)
-                stdout = comet.launch_job("job_run_77", script_contents, hours=.1)
+                stdout = comet.launch_job(name, script_contents, hours=float(hours))
             else:
                 self.log.debug("Body arguments: " + str(self.request.body_arguments))
                 self.log.debug("Query arguments: " + str(self.request.query_arguments))

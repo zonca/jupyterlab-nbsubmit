@@ -200,7 +200,7 @@ class SlurmWidget extends Widget {
         '<textarea id="slurm_script" cols="50" rows="1"></textarea><br>' +
         'Job length [hours, float]<br>' +
         '<input type="text" id="hours"></input><br>' +
-        'Job name (no spaces, no symbols, starts with char)<br>' +
+        'Job name (no spaces, no symbols, starts with char), results will be available in ~/comet/nbsubmit/jobname<br>' +
         '<input type="text" id="name"></input><br>');
     // after the form submission area, insert a submit button and then a cancel button
     $('#name').after('<div id="slurm_buttons">'+
