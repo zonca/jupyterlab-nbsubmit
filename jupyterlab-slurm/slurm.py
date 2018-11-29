@@ -3,12 +3,12 @@ import re
 import shlex
 import asyncio
 import html
-import nbsubmit
+from nbsubmit import cluster
 
 from notebook.base.handlers import IPythonHandler
 from tornado.web import MissingArgumentError
 
-comet = nbsubmit.cluster.get("comet")
+comet = cluster.get("comet")
 
 class ShellExecutionHandler(IPythonHandler):
     async def run_command(self, command=None, stdin=None):
@@ -16,7 +16,10 @@ class ShellExecutionHandler(IPythonHandler):
         self.log.debug("stdin: " + str(stdin))
 
         def split_into_arguments(command):
-            commands = shlex.split(command)
+            if isinstance(command, list):
+                return command
+            else:
+                commands = shlex.split(command)
             # commands = command.strip().split(' ')
             return commands
 
@@ -134,7 +137,7 @@ class SbatchHandler(ShellExecutionHandler):
                 self.log.debug("Body arguments: " + str(self.request.body_arguments))
                 script_contents = self.get_body_argument("script")
                 self.log.debug("script_contents: " + script_contents)
-                comet.launch_job("job_run_77", "job.ipynb", hours=.1)
+                stdout = comet.launch_job("job_run_77", script_contents, hours=.1)
             else:
                 self.log.debug("Body arguments: " + str(self.request.body_arguments))
                 self.log.debug("Query arguments: " + str(self.request.query_arguments))
@@ -166,7 +169,10 @@ class SqueueHandler(ShellExecutionHandler):
         # Hard-coding this is not great -- ideally we would allow the user to customize this, or have the default output be the user's output
         # Figuring out how to do that would require more time spent learning the details of the DataTables API than is currently available.
         data, stderr = await self.run_command(
-            'squeue -o "%.18i %.9P %.8j %.8u %.2t %.10M %.6D %R" -h'
+            ["squeue",
+            "-u $USER",
+            "-o '%.18i %.9P %.8j %.8u %.2t %.10M %.6D %R'",
+            "-h"]
         )
 
         self.log.debug("stderr: " + str(stderr))
