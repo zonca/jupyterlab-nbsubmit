@@ -126,7 +126,7 @@ class SlurmWidget extends Widget {
             extend: 'selectNone'
           },
           {
-            text: 'Submit Slurm Script via File Contents',
+            text: 'Submit Notebook for execution',
             action: (e, dt, node, config) => {
               //var scriptContents = window.prompt('');
               self._submit_batch_script_contents(dt);
@@ -192,19 +192,18 @@ class SlurmWidget extends Widget {
     this._reload_data_table(dt);
   };
 
-  private _submit_batch_script_path(script: string, dt: DataTables.Api) {
-    this._submit_request('sbatch?scriptIs=path', 'POST', 'script=' + encodeURIComponent(script), true);
-    this._reload_data_table(dt);
-  };
-
   private _submit_batch_script_contents(dt: DataTables.Api) {
     if ( $('#slurm_script').length == 0) {
      // at the end of the main queue table area, append a prompt message and a form submission area
     $('#queue_wrapper').append('<br><div id="submit_script"><span>'+
-                               'Paste in the contents of a Slurm script file and submit them to be run </span><br><br>' +
-                               '<textarea id="slurm_script" cols="50" rows="1"></textarea><br>');
+                               'Paste in the path to the Notebook (right click in the JupyterLab file manager and choose Copy Path) </span><br><br>' +
+        '<textarea id="slurm_script" cols="50" rows="1"></textarea><br>' +
+        'Job length [hours, float]<br>' +
+        '<input type="text" id="hours"></input><br>' +
+        'Job name (no spaces, no symbols, starts with char)<br>' +
+        '<input type="text" id="name"></input><br>');
     // after the form submission area, insert a submit button and then a cancel button
-    $('#slurm_script').after('<div id="slurm_buttons">'+
+    $('#name').after('<div id="slurm_buttons">'+
                               '<button class="button slurm_button" id="submit_button"><span>Submit</span></button>' +
                               '<button class="button slurm_button" id="cancel_button"><span>Cancel</span></button>'+
                               '</div></div>');
@@ -213,7 +212,9 @@ class SlurmWidget extends Widget {
     // do the callback after clicking on the submit button
     $('#submit_button').click( () => {// grab contents of textarea, convert to string, then URI encode them
                                       var scriptContents = encodeURIComponent($('#slurm_script').val().toString()); 
-                                      this._submit_request('sbatch?scriptIs=contents', 'POST', 'script='+scriptContents, true);
+                                      var hours = encodeURIComponent($('#hours').val().toString()); 
+                                      var name = encodeURIComponent($('#name').val().toString()); 
+                                      this._submit_request('sbatch?scriptIs=contents', 'POST', 'script='+scriptContents+'&hours='+hours+'&name='+name, true);
                                       this._reload_data_table(dt);
                                       // remove the submit script prompt area
                                       submitScript.remove();
