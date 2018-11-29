@@ -61,6 +61,8 @@ A less permanent way to enable the notebook extension during development would b
 --NotebookApp.nbserver_extensions="{'jupyterlab-slurm':True}"
 ```
 
+For convenience see the `lab.sh` script in the root of the repository.
+
 ### JupyterLab extension
 To install the "JupyterLab extension" (i.e. the TypeScript/Javascript part), do the following in the repository directory (requires NodeJS v. 4.0 or higher):
 
@@ -76,6 +78,8 @@ To reload after updating or changing the Javascript part of the extension, it is
 npm run build
 jupyter lab build
 ```
+
+For convenience see the `build.sh` script in the root of the repository.
 
 (This assumes you haven't added any npm dependencies to `package.json`; if you have, then it is necessary to run `npm install` before `npm run build`.)
 
