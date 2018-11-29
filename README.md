@@ -1,7 +1,12 @@
-# jupyterlab-slurm
+# jupyterlab-nbsubmit
 
-A JupyterLab extension to interface with the Slurm workload manager.
+A JupyterLab extension to submit Jupyter Notebooks for remote execution on a Slurm based Supercomputer.
 
+This Jupyterlab extension is based on [jupyterlab-slurm](https://github.com/NERSC/jupyterlab-slurm)
+
+## Example usage
+
+See https://github.com/zonca/jupyterlab-nbsubmit/issues/1
 
 ## Prerequisites for Installation
 
